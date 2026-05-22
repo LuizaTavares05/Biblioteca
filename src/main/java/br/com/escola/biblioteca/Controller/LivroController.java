@@ -1,4 +1,4 @@
-package br.com.escola.biblioteca.Controller;
+package br.com.escola.biblioteca.controller;
 
 import java.util.ArrayList;
 import java.util.List;
