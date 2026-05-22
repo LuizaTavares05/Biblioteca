@@ -14,7 +14,7 @@ Aqui nós iremos submeter as soluções dos desafios propostos, praticando conce
 
 ## Integrantes
 - Luiza
-- Emmy
+- Emily Neves
 - Luiz Antônio
 - Roberta
 - Gabriel Mendonça
