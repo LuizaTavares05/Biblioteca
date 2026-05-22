@@ -6,28 +6,32 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
 
 @Entity
-@Table
+@Table (name = "Livro")
 public class LivroModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) /*Banco gera ID sozinho */
+    @Column (name = "ID")
     private Long id;
 
     @Column(name = "titulo", nullable = false) /*Regras Obrigatorias - Não permitir cadastro de livro com titulo vazio */
+    @NotBlank (message = "Preencher o titulo do livro")
     private String titulo;
 
-    @Column
+    @Column (name = "Isbn")
     private String isbn;
 
-    @Column
+    @Column (name = "data_ publicação")
     private String anoPublicacao;
 
-    @Column
+    @Column (name = "genero")
     private String genero;
 
     @Column(name = "autor", nullable = false)/*Regras Obrigatorias - Não permitir cadastro de livro sem autor*/
+    @NotBlank (message = "Preencher o nome do autor")
     private String autor;
 
     public LivroModel() {
