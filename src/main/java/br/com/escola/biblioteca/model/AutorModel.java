@@ -5,7 +5,7 @@ import java.time.LocalDate;
 
 @Entity
 @Table(name = "autor")
-public class Autor {
+public class AutorModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,7 +17,7 @@ public class Autor {
 
     private LocalDate dataNascimento;
 
-    public Autor() {
+    public AutorModel() {
     }
 
     public Long getId() {
