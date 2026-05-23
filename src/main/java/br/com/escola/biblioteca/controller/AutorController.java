@@ -1,79 +1,50 @@
 package br.com.escola.biblioteca.controller;
 
-import java.util.List;
-import java.util.Optional;
+import br.com.escola.biblioteca.dto.AutorRequestDto;
+import br.com.escola.biblioteca.dto.AutorResponseDto;
+import br.com.escola.biblioteca.service.AutorService;
+
+import jakarta.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import br.com.escola.biblioteca.model.AutorModel;
-import br.com.escola.biblioteca.repository.AutorRepository;
-import jakarta.validation.Valid;
-
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.PutMapping;
+import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/biblioteca")
+@RequestMapping("/autores")
 public class AutorController {
 
     @Autowired
-    private AutorRepository autorRepository;
-
-    @GetMapping("/all")
-    public List<Autor> listar() {
-        return autorRepository.findAll();
-    }
-
-    @GetMapping("/buscar/{id}")
-    public ResponseEntity<Autor> listarPorId(@PathVariable Long id) {
-        Optional<Autor> autorOptional = autorRepository.findById(id);
-        if (autorOptional.isPresent()) {
-            return ResponseEntity.ok(autorOptional.get());
-
-        } else {
-            return ResponseEntity.notFound().build();
-        }
-    }
+    private AutorService autorService;
 
     @PostMapping("/cadastrar")
-    @ResponseStatus(HttpStatus.CREATED)
-    public Autor cadastroAutor(@Valid @RequestBody Autor autor) {
-        autorRepository.save(autor);
-        return ResponseEntity.ok(autor).getBody();
-
+    public ResponseEntity<AutorResponseDto> inserir(@RequestBody @Valid AutorRequestDto dto) {
+        AutorResponseDto response = autorService.criar(dto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
-    @PutMapping("/atualizarAutor/{id}")
-    @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<Autor> atualizarAutor(@Valid @PathVariable Long id, @RequestBody Autor autor) {
-        if (!autorRepository.existsById(id)) {
-            return ResponseEntity.notFound().build();
-        }
-        autor.setId(id);
-        autorRepository.save(autor);
-        return ResponseEntity.ok(autor);
-
+    @GetMapping("/listar")
+    public ResponseEntity<List<AutorResponseDto>> listar() {
+        return ResponseEntity.ok(autorService.listarTodos());
     }
 
-    @DeleteMapping("/deletarAutor/{id}")
-    public ResponseEntity<Void> deletarAutor(@PathVariable Long id) {
-        if (!autorRepository.existsById(id)) {
-            return ResponseEntity.notFound().build();
+    @GetMapping("buscarPorId/{id}")
+    public ResponseEntity<AutorResponseDto> buscar(@PathVariable Long id) {
+        return ResponseEntity.ok(autorService.buscarPorId(id));
+    }
 
-        }
-        autorRepository.deleteById(id);
+    @PutMapping("alterarPorId/{id}")
+    public ResponseEntity<AutorResponseDto> editar(@PathVariable Long id,
+            @RequestBody @Valid AutorRequestDto dto) {
+        return ResponseEntity.ok(autorService.atualizar(id, dto));
+    }
 
+    @DeleteMapping("deletarPorId/{id}")
+    public ResponseEntity<Void> deletar(@PathVariable Long id) {
+        autorService.deletar(id);
         return ResponseEntity.noContent().build();
-
     }
-
 }
