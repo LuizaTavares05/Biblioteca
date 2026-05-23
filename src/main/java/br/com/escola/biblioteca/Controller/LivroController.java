@@ -1,4 +1,4 @@
-package br.com.escola.biblioteca.controller;
+package br.com.escola.biblioteca.Controller;
 
 import br.com.escola.biblioteca.dto.LivroRequestDto;
 import br.com.escola.biblioteca.dto.LivroResponseDTO;
@@ -13,9 +13,21 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+import br.com.escola.biblioteca.repository.LivroRepository;
+
 @RestController
 @RequestMapping("/livros")
 public class LivroController {
+	/*
+	private static List<Livro> lista_livro = new ArrayList<Livro>();
+	
+	@Autowired
+	public LivroRepository repositorio;
+	
+	@PostMapping("/inserir")
+	@ResponseStatus(HttpStatus.CREATED)
+	public Livro inserir(@RequestBody Livro livro) {
+		return repositorio.save(livro);
 
 	@Autowired
 	private LivroService livroService;
