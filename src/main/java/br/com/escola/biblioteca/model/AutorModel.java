@@ -1,4 +1,4 @@
-package br.com.escola.biblioteca.entity;
+package br.com.escola.biblioteca.model;
 
 import jakarta.persistence.*;
 import java.time.LocalDate;
