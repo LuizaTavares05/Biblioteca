@@ -5,40 +5,40 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
-@Table (name = "Livro")
+@Table(name = "livro")
 public class LivroModel {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY) /*Banco gera ID sozinho */
-    @Column (name = "ID")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "titulo", nullable = false) /*Regras Obrigatorias - Não permitir cadastro de livro com titulo vazio */
-    @NotBlank (message = "Preencher o titulo do livro")
+    @Column(nullable = false)
+    @NotBlank(message = "Título não pode ser vazio")
     private String titulo;
 
-    @Column (name = "Isbn")
     private String isbn;
 
-    @Column (name = "data_ publicação")
-    private String anoPublicacao;
+    private Integer anoPublicacao;
 
-    @Column (name = "genero")
     private String genero;
 
-    @Column(name = "autor", nullable = false)/*Regras Obrigatorias - Não permitir cadastro de livro sem autor*/
-    @NotBlank (message = "Preencher o nome do autor")
-    private String autor;
+    @ManyToOne
+    @JoinColumn(name = "autor_id", nullable = false)
+    @NotNull(message = "Autor é obrigatório")
+    private AutorModel autor;
 
     public LivroModel() {
         super();
     }
 
-    public LivroModel(Long id, String titulo, String isbn, String anoPublicacao, String genero, String autor) {
+    public LivroModel(Long id, String titulo, String isbn, Integer anoPublicacao, String genero, AutorModel autor) {
         super();
         this.id = id;
         this.titulo = titulo;
@@ -68,11 +68,11 @@ public class LivroModel {
         this.isbn = isbn;
     }
 
-    public String getAnoPublicacao() {
+    public Integer getAnoPublicacao() {
         return anoPublicacao;
     }
 
-    public void setAnoPublicacao(String anoPublicacao) {
+    public void setAnoPublicacao(Integer anoPublicacao) {
         this.anoPublicacao = anoPublicacao;
     }
 
@@ -84,11 +84,11 @@ public class LivroModel {
         this.genero = genero;
     }
 
-    public String getAutor() {
+    public AutorModel getAutor() {
         return autor;
     }
 
-    public void setAutor(String autor) {
+    public void setAutor(AutorModel autor) {
         this.autor = autor;
     }
 }

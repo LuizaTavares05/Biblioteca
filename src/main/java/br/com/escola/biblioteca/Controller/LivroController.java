@@ -1,26 +1,22 @@
 package br.com.escola.biblioteca.Controller;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import br.com.escola.biblioteca.dto.LivroRequestDto;
+import br.com.escola.biblioteca.dto.LivroResponseDTO;
+import br.com.escola.biblioteca.service.LivroService;
+
+import jakarta.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 import br.com.escola.biblioteca.repository.LivroRepository;
 
 @RestController
-@RequestMapping("/livro")
+@RequestMapping("/livros")
 public class LivroController {
 	/*
 	private static List<Livro> lista_livro = new ArrayList<Livro>();
@@ -32,39 +28,35 @@ public class LivroController {
 	@ResponseStatus(HttpStatus.CREATED)
 	public Livro inserir(@RequestBody Livro livro) {
 		return repositorio.save(livro);
+
+	@Autowired
+	private LivroService livroService;
+
+	@PostMapping("/cadastrar")
+	public ResponseEntity<LivroResponseDTO> inserir(@RequestBody @Valid LivroRequestDto dto) {
+		LivroResponseDTO response = livroService.criar(dto);
+		return ResponseEntity.status(HttpStatus.CREATED).body(response);
 	}
-	
-	@GetMapping
-	public List<Livro> lista(){
-		//return repositorio.findAll();
+
+	@GetMapping("/listar")
+	public ResponseEntity<List<LivroResponseDTO>> listar() {
+		return ResponseEntity.ok(livroService.listarTodos());
 	}
-	
-	@GetMapping("/{id}")
-	public ResponseEntity<Livro> buscar(@PathVariable Long id){
-		Optional<Livro> livro = repositorio.findById(id);
-		if(livro.isPresent()) {
-			return ResponseEntity.ok(livro.get());
-		}
-		return ResponseEntity.notFound().build();
+
+	@GetMapping("buscarPorId/{id}")
+	public ResponseEntity<LivroResponseDTO> buscar(@PathVariable Long id) {
+		return ResponseEntity.ok(livroService.buscarPorId(id));
 	}
-	
-	@PutMapping("editar/{id}")
-	public ResponseEntity<Veiculo> editar(@RequestBody Livro livro, @PathVariable Long id){
-		if(!repositorio.existsById(id)) {
-			return ResponseEntity.notFound().build();
-		}
-		livro.setId(id);
-		livro = repositorio.save(livro);
-		return ResponseEntity.ok(livro);
+
+	@PutMapping("alterarPorId/{id}")
+	public ResponseEntity<LivroResponseDTO> editar(@PathVariable Long id,
+			@RequestBody @Valid LivroRequestDto dto) {
+		return ResponseEntity.ok(livroService.atualizar(id, dto));
 	}
-	
-	@DeleteMapping("/deletar")
-	public ResponseEntity delete(@PathVariable Long id) {
-		if(!repositorio.existsById(id)) {
-			return ResponseEntity.notFound().build();
-		}
-		repositorio.deleteById(id);
+
+	@DeleteMapping("deletarPorId/{id}")
+	public ResponseEntity<Void> deletar(@PathVariable Long id) {
+		livroService.deletar(id);
 		return ResponseEntity.noContent().build();
 	}
-	*/
 }
