@@ -2,7 +2,6 @@ package br.com.escola.biblioteca.controller;
 
 import br.com.escola.biblioteca.dto.LivroRequestDto;
 import br.com.escola.biblioteca.dto.LivroResponseDTO;
-import br.com.escola.biblioteca.entity.Livro;
 import br.com.escola.biblioteca.service.LivroService;
 
 import jakarta.validation.Valid;
@@ -12,10 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
-
-import br.com.escola.biblioteca.repository.LivroRepository;
 
 @RestController
 @RequestMapping("/livros")
@@ -51,5 +47,5 @@ public class LivroController {
 		livroService.deletar(id);
 		return ResponseEntity.noContent().build();
 	}
-	
+
 }
