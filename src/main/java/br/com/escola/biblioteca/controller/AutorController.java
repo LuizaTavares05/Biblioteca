@@ -1,4 +1,4 @@
-package br.com.escola.biblioteca.controller;
+package br.com.escola.biblioteca.Controller;
 
 import br.com.escola.biblioteca.dto.AutorRequestDto;
 import br.com.escola.biblioteca.dto.AutorResponseDto;
