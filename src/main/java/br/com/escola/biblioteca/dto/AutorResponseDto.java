@@ -1,6 +1,6 @@
 package br.com.escola.biblioteca.dto;
 
-import br.com.escola.biblioteca.model.AutorModel;
+import br.com.escola.biblioteca.entity.Autor;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 
@@ -34,7 +34,7 @@ public record AutorResponseDto(
 
 ) {
 
-    public static AutorResponseDto fromEntity(AutorModel autor) {
+    public static AutorResponseDto fromEntity(Autor autor) {
 
         return new AutorResponseDto(
                 autor.getId(),
