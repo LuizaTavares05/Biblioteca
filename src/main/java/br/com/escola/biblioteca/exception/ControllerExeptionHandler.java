@@ -26,10 +26,9 @@ public class ControllerExeptionHandler extends ResponseEntityExceptionHandler {
             erros.add(error.getField() + ": "
                     + error.getDefaultMessage());
         }
-        ErroResposta erroResposta = new ErroResposta(status.value(), "Existem Campos Inválidos, Confira o preechimento", LocalDateTime.now(),
-                erros
-        );
+        ErroResposta erroResposta = new ErroResposta(status.value(), "Existem Campos Inválidos, Confira o preechimento",
+                LocalDateTime.now(),
+                erros);
         return super.handleExceptionInternal(ex, erroResposta, headers, status, request);
     }
 }
-
