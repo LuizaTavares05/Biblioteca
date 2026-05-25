@@ -1,12 +1,41 @@
 package br.com.escola.biblioteca.dto;
 
+import br.com.escola.biblioteca.model.AutorModel;
+
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import java.time.LocalDate;
 
-import br.com.escola.biblioteca.entity.Autor;
+public record AutorResponseDto(
 
-public record AutorResponseDto(Long id, String nome, String nacionalidade, LocalDate dataNascimento) {
+        @Schema(
+            description = "ID do autor",
+            example = "1"
+        )
+        Long id,
 
-    public static AutorResponseDto fromEntity(Autor autor) {
+        @Schema(
+            description = "Nome do autor",
+            example = "Machado de Assis"
+        )
+        String nome,
+
+        @Schema(
+            description = "Nacionalidade do autor",
+            example = "Brasileira"
+        )
+        String nacionalidade,
+
+        @Schema(
+            description = "Data de nascimento do autor",
+            example = "1839-06-21"
+        )
+        LocalDate dataNascimento
+
+) {
+
+    public static AutorResponseDto fromEntity(AutorModel autor) {
+
         return new AutorResponseDto(
                 autor.getId(),
                 autor.getNome(),
