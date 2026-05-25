@@ -2,7 +2,7 @@ package br.com.escola.biblioteca.service;
 
 import br.com.escola.biblioteca.dto.AutorRequestDto;
 import br.com.escola.biblioteca.dto.AutorResponseDto;
-import br.com.escola.biblioteca.model.AutorModel;
+import br.com.escola.biblioteca.entity.Autor;
 import br.com.escola.biblioteca.repository.AutorRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,12 +17,12 @@ public class AutorService {
     private AutorRepository autorRepository;
 
     public AutorResponseDto criar(AutorRequestDto dto) {
-        AutorModel autor = new AutorModel();
+        Autor autor = new Autor();
         autor.setNome(dto.nome());
         autor.setNacionalidade(dto.nacionalidade());
         autor.setDataNascimento(dto.dataNascimento());
 
-        AutorModel salvo = autorRepository.save(autor);
+        Autor salvo = autorRepository.save(autor);
         return AutorResponseDto.fromEntity(salvo);
     }
 
@@ -34,21 +34,21 @@ public class AutorService {
     }
 
     public AutorResponseDto buscarPorId(Long id) {
-        AutorModel autor = autorRepository.findById(id)
+        Autor autor = autorRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Autor não encontrado com id: " + id));
 
         return AutorResponseDto.fromEntity(autor);
     }
 
     public AutorResponseDto atualizar(Long id, AutorRequestDto dto) {
-        AutorModel autor = autorRepository.findById(id)
+        Autor autor = autorRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Autor não encontrado com id: " + id));
 
         autor.setNome(dto.nome());
         autor.setNacionalidade(dto.nacionalidade());
         autor.setDataNascimento(dto.dataNascimento());
 
-        AutorModel atualizado = autorRepository.save(autor);
+        Autor atualizado = autorRepository.save(autor);
         return AutorResponseDto.fromEntity(atualizado);
     }
 
@@ -59,7 +59,7 @@ public class AutorService {
         autorRepository.deleteById(id);
     }
 
-    public AutorModel buscarEntidadePorId(Long id) {
+    public Autor buscarEntidadePorId(Long id) {
         return autorRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Autor não encontrado com id: " + id));
     }

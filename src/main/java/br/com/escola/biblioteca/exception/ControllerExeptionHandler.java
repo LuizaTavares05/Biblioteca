@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-import br.com.escola.biblioteca.model.ErroResposta;
+import br.com.escola.biblioteca.entity.ErroResposta;
 
 @ControllerAdvice
 public class ControllerExeptionHandler extends ResponseEntityExceptionHandler {

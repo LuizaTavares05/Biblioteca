@@ -1,4 +1,4 @@
-package br.com.escola.biblioteca.model;
+package br.com.escola.biblioteca.entity;
 
 import java.time.LocalDateTime;
 import java.util.List;

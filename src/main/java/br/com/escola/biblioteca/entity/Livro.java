@@ -1,4 +1,4 @@
-package br.com.escola.biblioteca.model;
+package br.com.escola.biblioteca.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -13,7 +13,7 @@ import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "livro")
-public class LivroModel {
+public class Livro {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,13 +32,13 @@ public class LivroModel {
     @ManyToOne
     @JoinColumn(name = "autor_id", nullable = false)
     @NotNull(message = "Autor é obrigatório")
-    private AutorModel autor;
+    private Autor autor;
 
-    public LivroModel() {
+    public Livro() {
         super();
     }
 
-    public LivroModel(Long id, String titulo, String isbn, Integer anoPublicacao, String genero, AutorModel autor) {
+    public Livro(Long id, String titulo, String isbn, Integer anoPublicacao, String genero, Autor autor) {
         super();
         this.id = id;
         this.titulo = titulo;
@@ -84,11 +84,11 @@ public class LivroModel {
         this.genero = genero;
     }
 
-    public AutorModel getAutor() {
+    public Autor getAutor() {
         return autor;
     }
 
-    public void setAutor(AutorModel autor) {
+    public void setAutor(Autor autor) {
         this.autor = autor;
     }
 }

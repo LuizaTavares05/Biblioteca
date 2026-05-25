@@ -1,12 +1,12 @@
 package br.com.escola.biblioteca.dto;
 
-import br.com.escola.biblioteca.model.AutorModel;
-
 import java.time.LocalDate;
+
+import br.com.escola.biblioteca.entity.Autor;
 
 public record AutorResponseDto(Long id, String nome, String nacionalidade, LocalDate dataNascimento) {
 
-    public static AutorResponseDto fromEntity(AutorModel autor) {
+    public static AutorResponseDto fromEntity(Autor autor) {
         return new AutorResponseDto(
                 autor.getId(),
                 autor.getNome(),
