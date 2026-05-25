@@ -1,6 +1,6 @@
 package br.com.escola.biblioteca.dto;
 
-import br.com.escola.biblioteca.model.LivroModel;
+import br.com.escola.biblioteca.entity.Livro;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 
@@ -50,7 +50,7 @@ public record LivroResponseDTO(
 
 ) {
 
-    public static LivroResponseDTO fromEntity(LivroModel livro) {
+    public static LivroResponseDTO fromEntity(Livro livro) {
 
         return new LivroResponseDTO(
                 livro.getId(),
