@@ -4,6 +4,7 @@ import br.com.escola.biblioteca.dto.AutorRequestDto;
 import br.com.escola.biblioteca.dto.AutorResponseDto;
 import br.com.escola.biblioteca.entity.Autor;
 import br.com.escola.biblioteca.repository.AutorRepository;
+import br.com.escola.biblioteca.repository.LivroRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,6 +16,9 @@ public class AutorService {
 
     @Autowired
     private AutorRepository autorRepository;
+    
+    @Autowired
+    private LivroRepository livroRepository;
 
     public AutorResponseDto criar(AutorRequestDto dto) {
         Autor autor = new Autor();
@@ -56,6 +60,12 @@ public class AutorService {
         if (!autorRepository.existsById(id)) {
             throw new RuntimeException("Autor não encontrado com id: " + id);
         }
+
+        if (!livroRepository.findByAutorId(id).isEmpty()) {
+            throw new RuntimeException(
+                    "Não é possível excluir autor com livros cadastrados. Delete os livros primeiro.");
+        }
+
         autorRepository.deleteById(id);
     }
 
