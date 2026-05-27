@@ -5,6 +5,7 @@ import br.com.escola.biblioteca.dto.EditoraResponseDTO;
 import br.com.escola.biblioteca.entity.Editora;
 import br.com.escola.biblioteca.exception.NotFoundException;
 import br.com.escola.biblioteca.repository.EditoraRepository;
+import br.com.escola.biblioteca.repository.LivroRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,6 +17,9 @@ public class EditoraService {
 
     @Autowired
     private EditoraRepository editoraRepository;
+
+    @Autowired
+    private LivroRepository livroRepository;
 
     public EditoraResponseDTO criar(EditoraRequestDTO dto) {
         validarCnpj(dto.cnpj());
@@ -73,39 +77,38 @@ public class EditoraService {
         if (!editoraRepository.existsById(id)) {
             throw new NotFoundException("Editora não encontrada com id: " + id);
         }
+
+        if (!livroRepository.findByEditoraId(id).isEmpty()) {
+            throw new RuntimeException(
+                    "Não é possível excluir editora com livros cadastrados. Delete os livros primeiro.");
+        }
         editoraRepository.deleteById(id);
     }
 
-    // Método auxiliar — usado pelo LivroService
     public Editora buscarEntidadePorId(Long id) {
         return editoraRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Editora não encontrada com id: " + id));
     }
 
-    // Valida formato do CNPJ: 14 dígitos (com ou sem máscara)
     private void validarCnpj(String cnpj) {
         if (cnpj == null || cnpj.isBlank()) {
             throw new RuntimeException("CNPJ não pode ser vazio.");
         }
         String cnpjNumeros = cnpj.replaceAll("[.\\-/]", "");
         if (cnpjNumeros.length() != 14) {
-            throw new RuntimeException("CNPJ inválido. Deve conter 14 dígitos. Exemplo: 12.345.678/0001-90.");
+            throw new RuntimeException("CNPJ inválido. Deve conter 14 dígitos. Exemplo: 12345678000190.");
         }
         if (!cnpjNumeros.matches("\\d+")) {
             throw new RuntimeException("CNPJ deve conter apenas números.");
         }
     }
 
-    // Valida estado: sigla de 2 letras (ex: RJ, SP, POA não é válido — deve ser RS)
     private void validarEstado(String estado) {
         if (estado == null || estado.isBlank()) {
             throw new RuntimeException("Estado não pode ser vazio.");
         }
         if (estado.length() != 2) {
             throw new RuntimeException("Estado deve ser a sigla com 2 letras. Exemplos: RJ, SP, RS, MG.");
-        }
-        if (!estado.matches("[a-zA-Z]+")) {
-            throw new RuntimeException("Estado deve conter apenas letras.");
         }
     }
 }

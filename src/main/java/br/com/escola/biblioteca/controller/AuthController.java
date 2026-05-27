@@ -30,21 +30,17 @@ public class AuthController {
     @Autowired
     private UsuarioService usuarioService;
 
-    
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody LoginDTO login) {
 
-     
         Authentication auth = authenticationManager.authenticate(
-            new UsernamePasswordAuthenticationToken(login.getUsername(), login.getPassword())
-        );
+                new UsernamePasswordAuthenticationToken(login.getUsername(), login.getPassword()));
 
-       
         UserDetails user = (UserDetails) auth.getPrincipal();
         String token = jwtService.gerarToken(user.getUsername());
 
-        System.out.println(token); 
-        
+        System.out.println(token);
+
         return ResponseEntity.ok(token);
     }
 
