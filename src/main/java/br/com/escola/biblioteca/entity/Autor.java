@@ -1,11 +1,11 @@
-package br.com.escola.biblioteca.model;
+package br.com.escola.biblioteca.entity;
 
 import jakarta.persistence.*;
 import java.time.LocalDate;
 
 @Entity
 @Table(name = "autor")
-public class AutorModel {
+public class Autor {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,7 +17,7 @@ public class AutorModel {
 
     private LocalDate dataNascimento;
 
-    public AutorModel() {
+    public Autor() {
     }
 
     public Long getId() {
