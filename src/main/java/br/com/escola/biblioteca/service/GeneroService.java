@@ -5,6 +5,7 @@ import br.com.escola.biblioteca.dto.GeneroResponseDTO;
 import br.com.escola.biblioteca.entity.Genero;
 import br.com.escola.biblioteca.exception.NotFoundException;
 import br.com.escola.biblioteca.repository.GeneroRepository;
+import br.com.escola.biblioteca.repository.LivroRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,6 +17,9 @@ public class GeneroService {
 
     @Autowired
     private GeneroRepository generoRepository;
+
+    @Autowired
+    private LivroRepository livroRepository;
 
     public GeneroResponseDTO criar(GeneroRequestDTO dto) {
         validarSigla(dto.sigla());
@@ -59,6 +63,12 @@ public class GeneroService {
         if (!generoRepository.existsById(id)) {
             throw new NotFoundException("Gênero não encontrado com id: " + id);
         }
+
+        if (!livroRepository.findByGeneroId(id).isEmpty()) {
+            throw new RuntimeException(
+                    "Não é possível excluir gênero com livros cadastrados. Delete os livros primeiro.");
+        }
+
         generoRepository.deleteById(id);
     }
 
