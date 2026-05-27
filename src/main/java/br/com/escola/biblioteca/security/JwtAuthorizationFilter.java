@@ -30,42 +30,47 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
                                     HttpServletResponse response,
                                     FilterChain chain)
             throws ServletException, IOException {
-    	
-    	String path = request.getServletPath();
 
-    	if (path.equals("/auth/login") || path.equals("/auth/registrar")) {
-    	    chain.doFilter(request, response);
-    	    return;
-    	}
-    	
+        String path = request.getRequestURI();
 
-        // 1. Pega o cabeçalho Authorization da requisição
-        String header = request.getHeader("Authorization");
+        // 🔥 LIBERA ROTAS PUBLICAS
+        if (path.startsWith("/auth") ||
+            path.startsWith("/swagger-ui") ||
+            path.startsWith("/v3/api-docs")) {
 
-        // 2. Verifica se veio um token no formato "Bearer <token>"
-        if (header != null && header.startsWith("Bearer ")) {
-
-            // 3. Remove a palavra "Bearer " e fica só com o token
-            String token = header.substring(7);
-
-            // 4. Valida o token e extrai o username (e-mail)
-            String username = jwtService.validarToken(token);
-
-            // 5. Se o token é válido e não há autenticação ativa na sessão
-            if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-
-                // 6. Busca o usuário no banco de dados
-                UserDetails user = usuarioService.loadUserByUsername(username);
-
-                // 7. Cria o objeto de autenticação e registra no contexto do Spring Security
-                UsernamePasswordAuthenticationToken auth =
-                        new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
-                auth.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-                SecurityContextHolder.getContext().setAuthentication(auth);
-            }
+            chain.doFilter(request, response);
+            return;
         }
 
-        // 8. Deixa a requisição continuar
+        String header = request.getHeader("Authorization");
+
+        if (header == null || !header.startsWith("Bearer ")) {
+            chain.doFilter(request, response);
+            return;
+        }
+
+        String token = header.substring(7);
+        String username = jwtService.validarToken(token);
+
+        if (username != null &&
+            SecurityContextHolder.getContext().getAuthentication() == null) {
+
+            UserDetails user = usuarioService.loadUserByUsername(username);
+
+            UsernamePasswordAuthenticationToken auth =
+                    new UsernamePasswordAuthenticationToken(
+                            user,
+                            null,
+                            user.getAuthorities()
+                    );
+
+            auth.setDetails(
+                    new WebAuthenticationDetailsSource().buildDetails(request)
+            );
+
+            SecurityContextHolder.getContext().setAuthentication(auth);
+        }
+
         chain.doFilter(request, response);
     }
 }
