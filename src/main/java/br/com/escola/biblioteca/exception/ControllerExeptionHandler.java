@@ -32,19 +32,7 @@ public class ControllerExeptionHandler extends ResponseEntityExceptionHandler {
                 status.value(),
                 "Existem Campos Inválidos, Confira o preechimento",
                 LocalDateTime.now(),
-                erros
-        );
+                erros);
         return super.handleExceptionInternal(ex, erroResposta, headers, status, request);
-    }
-
-    @ExceptionHandler(RuntimeException.class)
-    public ResponseEntity<ErroResposta> handleRuntimeException(RuntimeException ex) {
-        ErroResposta erroResposta = new ErroResposta(
-                HttpStatus.NOT_FOUND.value(),
-                ex.getMessage(),
-                LocalDateTime.now(),
-                List.of()
-        );
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(erroResposta);
     }
 }
