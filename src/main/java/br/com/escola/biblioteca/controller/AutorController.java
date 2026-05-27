@@ -54,7 +54,7 @@ public class AutorController {
         return ResponseEntity.ok(autorService.listarTodos());
     }
 
-    @GetMapping("buscarPorId/{id}")
+    @GetMapping("/buscarPorId/{id}")
 
     @Operation(summary = "Buscar autor por ID", description = "Retorna um autor específico pelo ID")
 
@@ -67,7 +67,7 @@ public class AutorController {
         return ResponseEntity.ok(autorService.buscarPorId(id));
     }
 
-    @PutMapping("alterarPorId/{id}")
+    @PutMapping("/alterarPorId/{id}")
 
     @Operation(summary = "Alterar autor", description = "Atualiza os dados de um autor")
 

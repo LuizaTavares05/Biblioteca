@@ -64,7 +64,7 @@ public class LivroController {
 		return ResponseEntity.ok(livroService.listarTodos());
 	}
 
-	@GetMapping("buscarPorId/{id}")
+	@GetMapping("/buscarPorId/{id}")
 	
 	@Operation(
 	        summary = "Buscar livro por ID",
@@ -79,7 +79,7 @@ public class LivroController {
 		return ResponseEntity.ok(livroService.buscarPorId(id));
 	}
 
-	@PutMapping("alterarPorId/{id}")
+	@PutMapping("/alterarPorId/{id}")
 	
 	   @Operation(
 		        summary = "Alterar livro",
@@ -96,7 +96,7 @@ public class LivroController {
 		return ResponseEntity.ok(livroService.atualizar(id, dto));
 	}
 
-	@DeleteMapping("deletarPorId/{id}")
+	@DeleteMapping("/deletarPorId/{id}")
 	public ResponseEntity<Void> deletar(@PathVariable Long id) {
 		livroService.deletar(id);
 		return ResponseEntity.noContent().build();
