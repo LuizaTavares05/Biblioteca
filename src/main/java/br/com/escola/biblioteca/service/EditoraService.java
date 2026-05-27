@@ -76,13 +76,11 @@ public class EditoraService {
         editoraRepository.deleteById(id);
     }
 
-    // Método auxiliar — usado pelo LivroService
     public Editora buscarEntidadePorId(Long id) {
         return editoraRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Editora não encontrada com id: " + id));
     }
 
-    // Valida formato do CNPJ: 14 dígitos (com ou sem máscara)
     private void validarCnpj(String cnpj) {
         if (cnpj == null || cnpj.isBlank()) {
             throw new RuntimeException("CNPJ não pode ser vazio.");
@@ -96,16 +94,12 @@ public class EditoraService {
         }
     }
 
-    // Valida estado: sigla de 2 letras (ex: RJ, SP, POA não é válido — deve ser RS)
     private void validarEstado(String estado) {
         if (estado == null || estado.isBlank()) {
             throw new RuntimeException("Estado não pode ser vazio.");
         }
         if (estado.length() != 2) {
             throw new RuntimeException("Estado deve ser a sigla com 2 letras. Exemplos: RJ, SP, RS, MG.");
-        }
-        if (!estado.matches("[a-zA-Z]+")) {
-            throw new RuntimeException("Estado deve conter apenas letras.");
         }
     }
 }

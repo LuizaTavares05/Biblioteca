@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import br.com.escola.biblioteca.dto.GeneroResponseDTO;
+import br.com.escola.biblioteca.dto.GeneroRequestDTO;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -22,99 +24,79 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.DeleteMapping;
 
-
 @RestController
 @RequestMapping("/generos")
 
-@Tag(
-        name =  "Generos",
-        description =  "Api responsavel pelo gerenciamento de gêneros"
+@Tag(name = "Generos", description = "Api responsavel pelo gerenciamento de gêneros"
 
 )
 public class GeneroController {
 
     @Autowired
-    private GeneroService  generoService;
+    private GeneroService generoService;
 
     @PostMapping("/cadastrar")
 
     @Operation(
 
-        summary = "Cadastrar gênero",
-        description = "Realizar o cadastro de um novo gênero"
-    )
+            summary = "Cadastrar gênero", description = "Realizar o cadastro de um novo gênero")
 
-    @ApiResponses(value ={
-        @ApiResponse(responseCode = "201", description = "Gênero cadastrado com sucesso"),
-        @ApiResponse(responseCode = "400", description = "Erro ao cadastrar gênero")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Gênero cadastrado com sucesso"),
+            @ApiResponse(responseCode = "400", description = "Erro ao cadastrar gênero")
 
-})
-     public ResponseEntity<GeneroResponseDto> inserir(@RequestBody @Valid GeneroRequestDto dto) {
-        GeneroResponseDto response = generoService.criar(dto);
+    })
+    public ResponseEntity<GeneroResponseDTO> inserir(@RequestBody @Valid GeneroRequestDTO dto) {
+        GeneroResponseDTO response = generoService.criar(dto);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
-     }
+    }
 
-     @GetMapping("/listar")
+    @GetMapping("/listar")
 
-     @Operation(
-            summary = "Listar gêneros",
-            description = "Retorna todos os gêneros cadastrados"
-     )
+    @Operation(summary = "Listar gêneros", description = "Retorna todos os gêneros cadastrados")
 
-     @ApiResponses(value = {
-        @ApiResponse(responseCode = "200", description = "Lista retornada com sucesso")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Lista retornada com sucesso")
 
-     })
-        public ResponseEntity<List<GeneroResponseDto>> listar()  {
-            return ResponseEntity.ok(generoService.listarTodos());
-        }
-      
-        @GetMapping("/buscarPorId/{id}")
+    })
+    public ResponseEntity<List<GeneroResponseDTO>> listar() {
+        return ResponseEntity.ok(generoService.listarTodos());
+    }
 
-        @Operation(
-            summary =  "Buscar gênero por ID",
-            description =  "Retorna um gênero específico pelo ID"
+    @GetMapping("/buscarPorId/{id}")
 
-             )
+    @Operation(summary = "Buscar gênero por ID", description = "Retorna um gênero específico pelo ID"
 
-        @ApiResponses(value = {
+    )
+
+    @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Gênero encontrado"),
             @ApiResponse(responseCode = "404", description = "Gênero não encontrado")
 
-        })
+    })
 
-        public ResponseEntity<GeneroResponseDto> buscar(@PathVariable Long id) {
-            return ResponseEntity.ok(generoService.buscarPorId(id));
-        }
+    public ResponseEntity<GeneroResponseDTO> buscar(@PathVariable Long id) {
+        return ResponseEntity.ok(generoService.buscarPorId(id));
+    }
 
-        @PutMapping("/alterarPorId/{id}")
+    @PutMapping("/alterarPorId/{id}")
 
-        @Operation(
-            summary =  "Alterar gênero",
-            description = "Atualizar os dados de um gênero"
-        )
-          
-        @ApiResponses(value = {
-            @ApiResponse(responseCode =  "200", description = "Gênero atualizado com sucesso"),
-            @ApiResponse(responseCode =  "404", description = "Gênero não encontrado")
-        })
+    @Operation(summary = "Alterar gênero", description = "Atualizar os dados de um gênero")
 
-        public ResponseEntity<GeneroResponseDto> editar(@PathVariable Long id,
-            @RequestBody @Valid GeneroRequestDto dto) {
-                return ResponseEntity.ok(generoService.atualizar(id,dto));
-            }
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Gênero atualizado com sucesso"),
+            @ApiResponse(responseCode = "404", description = "Gênero não encontrado")
+    })
 
-            @DeleteMapping("/deletarPorId/{id}")
-            public ResponseEntity<Void> deletar(@PathVariable Long id) {
-                generoService.deletar(id);
-                return ResponseEntity.noContent().build();
-            }
-        }
+    public ResponseEntity<GeneroResponseDTO> editar(@PathVariable Long id,
+            @RequestBody @Valid GeneroRequestDTO dto) {
+        return ResponseEntity.ok(generoService.atualizar(id, dto));
+    }
 
-   
-    
-    
-    
-    
-
+    @DeleteMapping("/deletarPorId/{id}")
+    public ResponseEntity<Void> deletar(@PathVariable Long id) {
+        generoService.deletar(id);
+        return ResponseEntity.noContent().build();
+    }
+}
