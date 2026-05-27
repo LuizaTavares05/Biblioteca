@@ -9,18 +9,18 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "genero")
 public class Genero {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	private String nome;
-	
+
 	private String sigla;
-	
-	public Genero() {	
+
+	public Genero() {
 	}
-	
+
 	public Genero(Long id, String nome, String sigla) {
 		this.id = id;
 		this.nome = nome;

@@ -1,4 +1,4 @@
-package br.com.escola.biblioteca.Controller;
+package br.com.escola.biblioteca.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

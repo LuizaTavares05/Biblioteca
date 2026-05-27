@@ -27,25 +27,35 @@ public class Livro {
 
     private Integer anoPublicacao;
 
-    private String genero;
-
     @ManyToOne
     @JoinColumn(name = "autor_id", nullable = false)
     @NotNull(message = "Autor é obrigatório")
     private Autor autor;
 
+    @ManyToOne
+    @JoinColumn(name = "genero_id", nullable = false)
+    @NotNull(message = "Gênero é obrigatório")
+    private Genero genero;
+
+    @ManyToOne
+    @JoinColumn(name = "editora_id", nullable = false)
+    @NotNull(message = "Editora é obrigatória")
+    private Editora editora;
+
     public Livro() {
         super();
     }
 
-    public Livro(Long id, String titulo, String isbn, Integer anoPublicacao, String genero, Autor autor) {
+    public Livro(Long id, String titulo, String isbn, Integer anoPublicacao,
+            Autor autor, Genero genero, Editora editora) {
         super();
         this.id = id;
         this.titulo = titulo;
         this.isbn = isbn;
         this.anoPublicacao = anoPublicacao;
-        this.genero = genero;
         this.autor = autor;
+        this.genero = genero;
+        this.editora = editora;
     }
 
     public Long getId() {
@@ -76,19 +86,27 @@ public class Livro {
         this.anoPublicacao = anoPublicacao;
     }
 
-    public String getGenero() {
-        return genero;
-    }
-
-    public void setGenero(String genero) {
-        this.genero = genero;
-    }
-
     public Autor getAutor() {
         return autor;
     }
 
     public void setAutor(Autor autor) {
         this.autor = autor;
+    }
+
+    public Genero getGenero() {
+        return genero;
+    }
+
+    public void setGenero(Genero genero) {
+        this.genero = genero;
+    }
+
+    public Editora getEditora() {
+        return editora;
+    }
+
+    public void setEditora(Editora editora) {
+        this.editora = editora;
     }
 }
