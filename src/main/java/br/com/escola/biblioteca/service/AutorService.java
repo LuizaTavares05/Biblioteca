@@ -70,7 +70,6 @@ public class AutorService {
         autorRepository.deleteById(id);
     }
 
-    // Método auxiliar — usado pelo LivroService
     public Autor buscarEntidadePorId(Long id) {
         return autorRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Autor não encontrado com id: " + id));
