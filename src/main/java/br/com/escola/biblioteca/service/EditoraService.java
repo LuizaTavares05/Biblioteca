@@ -3,6 +3,7 @@ package br.com.escola.biblioteca.service;
 import br.com.escola.biblioteca.dto.EditoraRequestDTO;
 import br.com.escola.biblioteca.dto.EditoraResponseDTO;
 import br.com.escola.biblioteca.entity.Editora;
+import br.com.escola.biblioteca.exception.BusinessException;
 import br.com.escola.biblioteca.exception.NotFoundException;
 import br.com.escola.biblioteca.repository.EditoraRepository;
 import br.com.escola.biblioteca.repository.LivroRepository;
@@ -27,7 +28,7 @@ public class EditoraService {
 
         // Verifica CNPJ duplicado
         if (editoraRepository.existsByCnpj(dto.cnpj())) {
-            throw new RuntimeException("Já existe uma editora cadastrada com o CNPJ: " + dto.cnpj());
+            throw new BusinessException("Já existe uma editora cadastrada com o CNPJ: " + dto.cnpj());
         }
 
         Editora editora = new Editora();
@@ -62,7 +63,7 @@ public class EditoraService {
 
         // Verifica CNPJ duplicado ignorando a própria editora
         if (editoraRepository.existsByCnpjAndIdNot(dto.cnpj(), id)) {
-            throw new RuntimeException("Já existe outra editora cadastrada com o CNPJ: " + dto.cnpj());
+            throw new BusinessException("Já existe outra editora cadastrada com o CNPJ: " + dto.cnpj());
         }
 
         editora.setNome(dto.nome());
@@ -79,7 +80,7 @@ public class EditoraService {
         }
 
         if (!livroRepository.findByEditoraId(id).isEmpty()) {
-            throw new RuntimeException(
+            throw new BusinessException(
                     "Não é possível excluir editora com livros cadastrados. Delete os livros primeiro.");
         }
         editoraRepository.deleteById(id);
@@ -92,23 +93,23 @@ public class EditoraService {
 
     private void validarCnpj(String cnpj) {
         if (cnpj == null || cnpj.isBlank()) {
-            throw new RuntimeException("CNPJ não pode ser vazio.");
+            throw new BusinessException("CNPJ não pode ser vazio.");
         }
         String cnpjNumeros = cnpj.replaceAll("[.\\-/]", "");
         if (cnpjNumeros.length() != 14) {
-            throw new RuntimeException("CNPJ inválido. Deve conter 14 dígitos. Exemplo: 12345678000190.");
+            throw new BusinessException("CNPJ inválido. Deve conter 14 dígitos. Exemplo: 12345678000190.");
         }
         if (!cnpjNumeros.matches("\\d+")) {
-            throw new RuntimeException("CNPJ deve conter apenas números.");
+            throw new BusinessException("CNPJ deve conter apenas números.");
         }
     }
 
     private void validarEstado(String estado) {
         if (estado == null || estado.isBlank()) {
-            throw new RuntimeException("Estado não pode ser vazio.");
+            throw new BusinessException("Estado não pode ser vazio.");
         }
         if (estado.length() != 2) {
-            throw new RuntimeException("Estado deve ser a sigla com 2 letras. Exemplos: RJ, SP, RS, MG.");
+            throw new BusinessException("Estado deve ser a sigla com 2 letras. Exemplos: RJ, SP, RS, MG.");
         }
     }
 }
