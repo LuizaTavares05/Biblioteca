@@ -18,7 +18,7 @@ public class MailConfig {
 
             SimpleMailMessage message = new SimpleMailMessage();
 
-            message.setFrom("seuemail@gmail.com");
+            message.setFrom("tavaresluiza2005@gmail.com");
             message.setTo(para);
             message.setSubject(assunto);
 
