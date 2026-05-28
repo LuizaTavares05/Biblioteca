@@ -23,8 +23,82 @@ Aqui nós iremos submeter as soluções dos desafios propostos, praticando conce
 ##  Estrutura do Repositório
 
 ```
+BIBLIOTECA/
+├── .mvn/
+├── src/
+│   ├── main/
+│   │   ├── java/br/com/escola/biblioteca/
+│   │   │   ├── config/                     # Configurações gerais da aplicação
+│   │   │   │   ├── MailConfig.java
+│   │   │   │   ├── OpenAPIConfig.java     # Configuração Swagger/OpenAPI
+│   │   │   │   ├── PasswordEncoderConfig.java
+│   │   │   │   └── SecurityConfig.java    # Configuração Spring Security + JWT
+│   │   │   │
+│   │   │   ├── controller/                 # Endpoints REST da API
+│   │   │   │   ├── AuthController.java
+│   │   │   │   ├── AutorController.java
+│   │   │   │   ├── EditoraController.java
+│   │   │   │   ├── GeneroController.java
+│   │   │   │   └── LivroController.java
+│   │   │   │
+│   │   │   ├── dto/                        # Objetos de transferência de dados
+│   │   │   │   ├── AutorRequestDto.java
+│   │   │   │   ├── AutorResponseDto.java
+│   │   │   │   ├── EditoraRequestDTO.java
+│   │   │   │   ├── EditoraResponseDTO.java
+│   │   │   │   ├── GeneroRequestDTO.java
+│   │   │   │   ├── GeneroResponseDTO.java
+│   │   │   │   ├── LivroRequestDto.java
+│   │   │   │   ├── LivroResponseDto.java
+│   │   │   │   ├── LoginDTO.java
+│   │   │   │   └── UsuarioDTO.java
+│   │   │   │
+│   │   │   ├── entity/                     # Entidades JPA
+│   │   │   │   ├── Autor.java
+│   │   │   │   ├── Editora.java
+│   │   │   │   ├── ErroResposta.java
+│   │   │   │   ├── Genero.java
+│   │   │   │   ├── Livro.java
+│   │   │   │   └── Usuario.java
+│   │   │   │
+│   │   │   ├── exception/                  # Tratamento de exceções
+│   │   │   │   ├── BusinessException.java
+│   │   │   │   ├── ControllerExceptionHandler.java
+│   │   │   │   └── NotFoundException.java
+│   │   │   │
+│   │   │   ├── repository/                 # Interfaces JPA Repository
+│   │   │   │   ├── AutorRepository.java
+│   │   │   │   ├── EditoraRepository.java
+│   │   │   │   ├── GeneroRepository.java
+│   │   │   │   ├── LivroRepository.java
+│   │   │   │   └── UsuarioRepository.java
+│   │   │   │
+│   │   │   ├── security/                   # Segurança JWT
+│   │   │   │   ├── JwtAuthorizationFilter.java
+│   │   │   │   └── JwtService.java
+│   │   │   │
+│   │   │   ├── service/                    # Regras de negócio
+│   │   │   │   ├── AutorService.java
+│   │   │   │   ├── EditoraService.java
+│   │   │   │   ├── GeneroService.java
+│   │   │   │   ├── LivroService.java
+│   │   │   │   └── UsuarioService.java
+│   │   │   │
+│   │   │   └── BibliotecaApplication.java # Classe principal Spring Boot
+│   │   │
+│   │   └── resources/
+│   │       └── application.properties      # Configurações da aplicação
+│   │
+│   └── test/
+│
+├── target/
+├── .gitattributes
+├── .gitignore
+├── mvnw
+├── mvnw.cmd
+├── pom.xml                                  # Dependências Maven
+└── README.md
 ```
-
 ---
 
 ## Como Contribuir
