@@ -3,6 +3,7 @@ package br.com.escola.biblioteca.service;
 import br.com.escola.biblioteca.dto.AutorRequestDto;
 import br.com.escola.biblioteca.dto.AutorResponseDto;
 import br.com.escola.biblioteca.entity.Autor;
+import br.com.escola.biblioteca.exception.BusinessException;
 import br.com.escola.biblioteca.exception.NotFoundException;
 import br.com.escola.biblioteca.repository.AutorRepository;
 import br.com.escola.biblioteca.repository.LivroRepository;
@@ -63,7 +64,7 @@ public class AutorService {
         }
 
         if (!livroRepository.findByAutorId(id).isEmpty()) {
-            throw new RuntimeException("Não é possível excluir autor com livros cadastrados. Delete os livros primeiro.");
+            throw new BusinessException("Não é possível excluir autor com livros cadastrados. Delete os livros primeiro.");
         }
 
         autorRepository.deleteById(id);

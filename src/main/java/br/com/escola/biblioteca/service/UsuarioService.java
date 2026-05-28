@@ -8,6 +8,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import br.com.escola.biblioteca.entity.Usuario;
+import br.com.escola.biblioteca.exception.BusinessException;
 import br.com.escola.biblioteca.repository.UsuarioRepository;
 
 @Service
@@ -29,7 +30,7 @@ public class UsuarioService implements UserDetailsService {
 
     public Usuario cadastrar(Usuario usuario) {
         if (usuarioRepository.findByEmail(usuario.getEmail()).isPresent()) {
-            throw new RuntimeException("E-mail já cadastrado!");
+            throw new BusinessException("E-mail já cadastrado!");
         }
         usuario.setSenha(passwordEncoder.encode(usuario.getSenha()));
         return usuarioRepository.save(usuario);

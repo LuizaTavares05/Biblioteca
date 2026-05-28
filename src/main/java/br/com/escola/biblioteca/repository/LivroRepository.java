@@ -12,7 +12,6 @@ import java.util.List;
 @Repository
 public interface LivroRepository extends JpaRepository<Livro, Long> {
     List<Livro> findByAutorId(Long autorId);
-    List<Genero> findByGeneroId(Long id);
-
-    List<Editora> findByEditoraId(Long id);
+    List<Livro> findByGeneroId(Long generoId);
+    List<Livro> findByEditoraId(Long editoraId);
 }

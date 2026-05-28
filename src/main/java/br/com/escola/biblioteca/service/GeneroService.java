@@ -3,6 +3,7 @@ package br.com.escola.biblioteca.service;
 import br.com.escola.biblioteca.dto.GeneroRequestDTO;
 import br.com.escola.biblioteca.dto.GeneroResponseDTO;
 import br.com.escola.biblioteca.entity.Genero;
+import br.com.escola.biblioteca.exception.BusinessException;
 import br.com.escola.biblioteca.exception.NotFoundException;
 import br.com.escola.biblioteca.repository.GeneroRepository;
 import br.com.escola.biblioteca.repository.LivroRepository;
@@ -65,7 +66,7 @@ public class GeneroService {
         }
 
         if (!livroRepository.findByGeneroId(id).isEmpty()) {
-            throw new RuntimeException(
+            throw new BusinessException(
                     "Não é possível excluir gênero com livros cadastrados. Delete os livros primeiro.");
         }
 
@@ -81,13 +82,13 @@ public class GeneroService {
     // Valida se a sigla tem entre 2 e 5 caracteres e só letras
     private void validarSigla(String sigla) {
         if (sigla == null || sigla.isBlank()) {
-            throw new RuntimeException("Sigla não pode ser vazia.");
+            throw new BusinessException("Sigla não pode ser vazia.");
         }
         if (sigla.length() < 2 || sigla.length() > 5) {
-            throw new RuntimeException("Sigla deve ter entre 2 e 5 caracteres. Exemplo: ROM, DRM.");
+            throw new BusinessException("Sigla deve ter entre 2 e 5 caracteres. Exemplo: ROM, DRM.");
         }
         if (!sigla.matches("[a-zA-Z]+")) {
-            throw new RuntimeException("Sigla deve conter apenas letras.");
+            throw new BusinessException("Sigla deve conter apenas letras.");
         }
     }
 }
