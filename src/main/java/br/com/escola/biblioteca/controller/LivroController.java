@@ -80,6 +80,11 @@ public class LivroController {
 		return ResponseEntity.ok(livroService.atualizar(id, dto));
 	}
 
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "204", description = "Livro deletado com sucesso"),
+			@ApiResponse(responseCode = "404", description = "Livro não encontrado")
+	})
+
 	@DeleteMapping("/deletarPorId/{id}")
 	public ResponseEntity<Void> deletar(@PathVariable Long id) {
 		livroService.deletar(id);

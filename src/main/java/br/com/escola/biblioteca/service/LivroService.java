@@ -50,7 +50,7 @@ public class LivroService {
 
                 // Envia e-mail de cadastro
                 mailConfig.sendEmail(
-                                "admin@biblioteca.com",
+                                "marcelo.collares@docente.firjan.senai.br",
                                 "Novo livro cadastrado",
                                 "Título: " + salvo.getTitulo() +
                                                 "\nAutor: " + salvo.getAutor().getNome() +
@@ -93,7 +93,7 @@ public class LivroService {
 
                 // Envia e-mail de alteração
                 mailConfig.sendEmail(
-                                "admin@biblioteca.com",
+                                "marcelo.collares@docente.firjan.senai.br",
                                 "Livro atualizado",
                                 "Título: " + atualizado.getTitulo() +
                                                 "\nAutor: " + atualizado.getAutor().getNome() +
@@ -111,7 +111,7 @@ public class LivroService {
 
                 // Envia e-mail de exclusão
                 mailConfig.sendEmail(
-                                "admin@biblioteca.com",
+                                "marcelo.collares@docente.firjan.senai.br",
                                 "Livro excluído",
                                 "Título: " + livro.getTitulo() +
                                                 "\nAutor: " + livro.getAutor().getNome() +
