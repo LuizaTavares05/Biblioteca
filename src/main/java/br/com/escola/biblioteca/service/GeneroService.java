@@ -73,13 +73,11 @@ public class GeneroService {
         generoRepository.deleteById(id);
     }
 
-    // Método auxiliar — usado pelo LivroService
     public Genero buscarEntidadePorId(Long id) {
         return generoRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Gênero não encontrado com id: " + id));
     }
 
-    // Valida se a sigla tem entre 2 e 5 caracteres e só letras
     private void validarSigla(String sigla) {
         if (sigla == null || sigla.isBlank()) {
             throw new BusinessException("Sigla não pode ser vazia.");
